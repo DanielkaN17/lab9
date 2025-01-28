@@ -16,6 +16,7 @@
                 double timeStatic2 = Runner.TimeStatic(r2);
                 Console.WriteLine($"Время (статическая функция): {timeStatic2} ч.");
 
+                
                 Runner r3 = new Runner(r1);
                 r3.Speed = 33; 
                 r3.Distance = 44; 
