@@ -43,7 +43,7 @@
                 r2--;
                 Console.WriteLine($"После --: {r2}");
 
-                // Операция приведения к double
+                // Операция приведения
                 double speedIncrease = (double)r2;
                 Console.WriteLine($"Необходимо увеличить скорость на {speedIncrease} км/ч, чтобы сократить время на 5%");
 
@@ -65,10 +65,46 @@
                 
                 // Часть 3
                 Console.WriteLine("\nЧасть 3: Демонстрация класса RunnerArray");
+                RunnerArray array1 = new RunnerArray(5);
+                Console.WriteLine("\nМассив из случайных чисел");
+                array1.PrintRunner();
 
+                RunnerArray array2 = new RunnerArray(array1);
+                Console.WriteLine("\nГлубокое копирование первого массива");
+                array2.PrintRunner();
 
+                array2[0].Speed = 999;
+                array2[4].Speed = 111;
+                array2[2].Speed = 555;
+                Console.WriteLine("\nМеняем некоторые значения скорости второго массива");
+                array2.PrintRunner();
 
+                Console.WriteLine("\nДемонстрация индексатора");
+                Console.WriteLine($"Бегун 2: {array1[2]}");
 
+                try
+                {
+                    array1[10] = new Runner(100, 5000);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"\nНе существует: {ex.Message}");
+                }
+
+                try
+                {
+                    Console.WriteLine($"Бегун 10: {array1[10]}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\nНе существует: {ex.Message}\n");
+                }
+
+                array1.SortRunners();
+                Console.WriteLine("Отсортированный массив");
+                array1.PrintRunner();
+
+                Console.WriteLine($"Количество созданных объектов: {Runner.ObjectCount}");
             }
 
             catch (Exception ex)

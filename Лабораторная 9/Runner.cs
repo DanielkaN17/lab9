@@ -19,7 +19,11 @@ namespace Lab9
             get { return objectCount; }
         }
 
-        // Конструктор с параметрами
+        /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="speed"></param>
+        /// <param name="distance"></param>
         public Runner(double speed, double distance)
         {
             Speed = speed;
@@ -27,17 +31,24 @@ namespace Lab9
             objectCount++;
         }
 
-        // Конструктор без параметров
+        /// <summary>
+        /// Конструктор без параметров
+        /// </summary>
         public Runner() : this(1, 1) 
         {
         }
 
-        // Конструктор копирования
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="r"></param>
         public Runner(Runner r) : this(r.speed, r.distance)
         {
         }
 
-        // Свойства
+        /// <summary>
+        /// 
+        /// </summary>
         public double Speed
         {
             get => speed;
@@ -51,6 +62,9 @@ namespace Lab9
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double Distance
         {
             get => distance;
@@ -61,20 +75,37 @@ namespace Lab9
                 }
         }
 
-        // Метод для вычисления времени
+        /// <summary>
+        /// Вычисление времени
+        /// </summary>
+        /// <returns>Время в часах, округление до двух знаков после запятой</returns>
+        /// <exception cref="InvalidOperationException">Выдает ошибку, если скорость равна нулю</exception>
         public double CalculatingTime()
         {
             if (speed == 0) throw new InvalidOperationException("Скорость не может быть равна нулю.");
             return Math.Round(distance / speed, 2);
         }
 
-        //Статическая функция для вычисления времени
+        /// <summary>
+        /// Вычисление времени на основе переданной сокрости и расстояния
+        /// </summary>
+        /// <param name="speed">Скорость бегуна</param>
+        /// <param name="distance">Расстояние, которое нужно преодолеть</param>
+        /// <returns>Время в часах, округление до двух знаков после запятой</returns>
+        /// <exception cref="ArgumentException">Выдает ошибку, если скорость равна нулю</exception>
         public static double TimeStatic(double speed, double distance)
         {
             if (speed == 0) throw new ArgumentException("Скорость не может быть равна нулю.");
             return Math.Round(distance / speed, 2);
         }
 
+        /// <summary>
+        /// Вычисление времени на основе объекта Runner
+        /// </summary>
+        /// <param name="runner">Объект Runner</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">Выдает ошибку, если объект равен null</exception>
+        /// <exception cref="InvalidOperationException">Выдает ошибку, если скорость равна нулю</exception>
         public static double TimeStatic(Runner runner)
         {
             if (runner == null) throw new ArgumentNullException(nameof(runner), "Передан пустой объект");
@@ -82,19 +113,32 @@ namespace Lab9
             return Math.Round(runner.Distance / runner.Speed, 2);
         }
 
-        // Метод для вывода информации
+        /// <summary>
+        /// Возвращает все значения о бегуне
+        /// </summary>
+        /// <returns>Строка с информацией о расстоянии, скорости и времени</returns>
         public override string ToString()
         {
-            return $"Скорость: {speed} км/ч, Расстояние: {distance} км, Время: {Time()} ч.";
+            return $"Расстояние: {distance} км, Скорость: {speed} км/ч,  Время: {CalculatingTime()} ч.";
         }
 
-        // Унарные операции
+        /// <summary>
+        /// Перегруженный оператор инкремента 
+        /// </summary>
+        /// <param name="runner">Объект Runner</param>
+        /// <returns>Обновленный объект Runner</returns>
         public static Runner operator ++(Runner runner)
         {
             runner.Distance += 0.1;
             return runner;
         }
 
+        /// <summary>
+        /// Перегруженный оператор декремента
+        /// </summary>
+        /// <param name="runner">Объект Runner</param>
+        /// <returns>Обновленный объект Runner</returns>
+        /// <exception cref="ArgumentException">Выдает ошибку, если скорость становится меньше нуля</exception>
         public static Runner operator --(Runner runner)
         {
             if (runner.Speed - 0.05 < 0)
@@ -106,21 +150,27 @@ namespace Lab9
             return runner;
         }
 
-        // Операции приведения типа
-
+        /// <summary>
+        /// Преобразование объекта Runner в double для вычисления разности в скорости
+        /// </summary>
+        /// <param name="runner">Объект Runner</param>
         public static explicit operator double(Runner runner)
         {
             if (runner.Speed <= 0) throw new ArgumentException("Скорость должна быть больше нуля.");
-            double currentTime = runner.Time();
+            double currentTime = runner.CalculatingTime();
             double targetTime = currentTime * 0.95; // 5% сокращение времени
             return Math.Round((runner.distance / targetTime) - runner.speed, 2);
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="runner"></param>
         public static implicit operator string(Runner runner)
         {
             if (runner.Speed <= 0) throw new ArgumentException("Скорость должна быть больше нуля.");
-            double totalSeconds = runner.Time() * 3600;
+            double totalSeconds = runner.CalculatingTime() * 3600;
             int hours = (int)(totalSeconds / 3600);
             int minutes = (int)((totalSeconds % 3600) / 60);
             int seconds = (int)(totalSeconds % 60);
@@ -128,7 +178,12 @@ namespace Lab9
             return $"{hours:D2}:{minutes:D2}:{seconds:D2}";
         }
 
-        // Бинарные операции
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r1"></param>
+        /// <param name="r2"></param>
+        /// <returns></returns>
         public static double operator -(Runner r1, Runner r2)
         {
             if (r1.Speed <= 0 || r2.Speed <= 0)
@@ -142,10 +197,22 @@ namespace Lab9
             return Math.Round(distanceR1, 2);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="speedIncrease"></param>
+        /// <returns></returns>
         public static Runner operator ^(Runner r, double speedIncrease)
         {
             return new Runner(r.Speed + speedIncrease, r.Distance);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
