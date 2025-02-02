@@ -164,9 +164,9 @@ namespace Lab9
         }
 
         /// <summary>
-        /// 
+        /// Конвертирование объекта Runner в строку "чч:мм:сс"
         /// </summary>
-        /// <param name="runner"></param>
+        /// <param name="runner">Объект Runner, который необходимо преобразовать в строку</param>
         public static implicit operator string(Runner runner)
         {
             if (runner.Speed <= 0) throw new ArgumentException("Скорость должна быть больше нуля.");
@@ -179,11 +179,12 @@ namespace Lab9
         }
 
         /// <summary>
-        /// 
+        /// Вычисление расстояние бегунов, при котором они встретяться
+        /// при условии, что они бегут навстречу друг другу
         /// </summary>
-        /// <param name="r1"></param>
-        /// <param name="r2"></param>
-        /// <returns></returns>
+        /// <param name="r1">Первый бегун</param>
+        /// <param name="r2">Второй бегун</param>
+        /// <returns>Расстояние, на котором они встретяться, либо -1, если не встретятся</returns>
         public static double operator -(Runner r1, Runner r2)
         {
             if (r1.Speed <= 0 || r2.Speed <= 0)
@@ -198,21 +199,21 @@ namespace Lab9
         }
 
         /// <summary>
-        /// 
+        /// Увеличение скорости бегуна на заданное значение
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="speedIncrease"></param>
-        /// <returns></returns>
+        /// <param name="r">Бегун, скорость которого будет увеличена</param>
+        /// <param name="speedIncrease">Значение, на которое будет увеличена скорость</param>
+        /// <returns>Новый объект Runner с увеличенной скоростью</returns>
         public static Runner operator ^(Runner r, double speedIncrease)
         {
             return new Runner(r.Speed + speedIncrease, r.Distance);
         }
 
         /// <summary>
-        /// 
+        /// Сравнение объектов Runner
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <param name="obj">Объект для сравнения с текущим объектом</param>
+        /// <returns>Если объекты равны - true, иначе false</returns>
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -226,7 +227,7 @@ namespace Lab9
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Speed, Distance);
+            return HashCode.Combine(Speed, Distance); 
         }
     }
 }
