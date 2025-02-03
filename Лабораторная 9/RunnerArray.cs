@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lab9
 {
-    internal class RunnerArray
+    public class RunnerArray
     {
         private Runner[] arr;
         private static int collectionCount = 0;

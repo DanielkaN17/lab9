@@ -208,6 +208,185 @@ namespace TestProject3
             Assert.AreEqual(expected, result);
         }
 
+        [TestMethod]
+        public void ExplicitConversionToDouble_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var runner = new Runner(0, 100);
+
+            // Act & Assert
+            var ex = Assert.ThrowsException<ArgumentException>(() => (double)runner);
+            Assert.AreEqual("Скорость должна быть больше нуля.", ex.Message);
+        }
+
+        [TestMethod]
+        public void ImplicitConversionToString_ShouldReturnCorrectTimeString()
+        {
+            // Arrange
+            var runner = new Runner(52, 38);
+            string expected = $"{(int)(runner.CalculatingTime()):D2}:43:48";
+
+            // Act
+            string result = (string)runner;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ImplicitConversionToString_ShouldThrowArgumentException()
+        {
+            // Arrange
+            var runner = new Runner(0, 100);
+
+            // Act & Assert
+            var ex = Assert.ThrowsException<ArgumentException>(() => (string)runner);
+            Assert.AreEqual("Скорость должна быть больше нуля.", ex.Message);
+        }
+
+        [TestMethod]
+        public void SubtractionOperator_ShouldRetunMeetingDistance()
+        {
+            // Arrange
+            var r1 = new Runner(10, 100);
+            var r2 = new Runner(10, 100);
+
+            // Act
+            double distance = r1 - r2;
+
+            // Assert
+            Assert.AreEqual(7.5, distance);
+        }
+
+        [TestMethod]
+        public void OperatorMinus_ShouldRetunCorrectDistance()
+        {
+            // Arrange
+            var r1 = new Runner(5, 0);
+            var r2 = new Runner(10, 0);
+            double expectedDistance = 5; // (5 * (15 / (5 + 10)))
+
+            // Act
+            double result = r1 - r2;
+
+            // Assert
+            Assert.AreEqual(expectedDistance, result);
+        }
+
+        [TestMethod]
+        public void OperatorMinus_ShouldRetunNegativeOne()
+        {
+            // Arrange
+            var r1 = new Runner(0, 0);
+            var r2 = new Runner(0, 0);
+
+            // Act
+            double result = r1 - r2;
+
+            // Assert
+            Assert.AreEqual(-1, result);
+        }
+
+        [TestMethod]
+        public void OperatorCaret_ShouldRetunNewRunnerWithIncreaseSpeed()
+        {
+            // Arrange
+            var runner = new Runner(5, 0);
+            double speedIncrease = 3;
+            double expectedNewSpeed = 8;
+
+            // Act
+            Runner newRunner = runner ^ speedIncrease;
+
+            // Assert
+            Assert.AreEqual(expectedNewSpeed, newRunner.Speed);
+            Assert.AreEqual(runner.Distance, newRunner.Distance);
+        }
+
+        [TestMethod]
+        public void Equals_ShouldRetunTrue()
+        {
+            // Arrange
+            var r1 = new Runner(5, 0);
+            var r2 = new Runner(5, 0);
+
+            // Act
+            bool result = r1.Equals(r2);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void Equals_ShouldRetunFaalse()
+        {
+            // Arrange
+            var r1 = new Runner(5, 0);
+            var r2 = new Runner(6, 0);
+
+            // Act
+            bool result = r1.Equals(r2);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void GetHashCode_ShouldRetunSameHashCodeForEqualRunners()
+        {
+            // Arrange
+            var r1 = new Runner(5, 0);
+            var r2 = new Runner(5, 0);
+
+            // Act
+            int hashCode1 = r1.GetHashCode();
+            int hashCode2 = r2.GetHashCode();
+
+            // Assert
+            Assert.AreEqual(hashCode1, hashCode2);
+        }
+
+        //[TestMethod]
+        //public void SortRunners_SortCorrectly_When_ArrayIsNotEmpty()
+        //{
+        //    // Arrange
+        //    var runnerArray = new RunnerArray(0);
+        //    using (sw var = new StringWriter())
+        //    {
+        //        Console.SetOut(sw);
+        //        // Act
+        //        Runner newRunner = runner ^ speedIncrease;
+
+        //        // Assert
+        //        Assert.AreEqual(expectedNewSpeed, newRunner.Speed);
+        //        Assert.AreEqual(runner.Distance, newRunner.Distance);
+        //    }
+        //}
+
+        //[TestMethod]
+        //public void Construct_ShouldThrowArgumentOutOfRangeException()
+        //{
+        //    // Arrange
+        //    int negativeSize = -1;
+
+        //    // Act & Assert
+        //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new RunnerArray(negativeSize));
+        //    Assert.That(ex.Message, Is.EqualTo("Размер массива должен быть больше нуля (Parameter 'size')"));
+        //}
+
+        [TestMethod]
+        public void CollectionCount_Increases_When_NewInstanceIsCreated()
+        {
+            // Arrange
+            int initialCount = RunnerArray.CollectionCount;
+
+            // Act
+            var runnerArray1 = new RunnerArray(5);
+            var runnerArray2 = new RunnerArray(3);
+
+            // Assert
+            Assert.AreEqual(initialCount + 2, RunnerArray.CollectionCount);
+        }
 
 
     }
