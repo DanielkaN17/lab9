@@ -346,33 +346,6 @@ namespace TestProject3
             Assert.AreEqual(hashCode1, hashCode2);
         }
 
-        //[TestMethod]
-        //public void SortRunners_SortCorrectly_When_ArrayIsNotEmpty()
-        //{
-        //    // Arrange
-        //    var runnerArray = new RunnerArray(0);
-        //    using (sw var = new StringWriter())
-        //    {
-        //        Console.SetOut(sw);
-        //        // Act
-        //        Runner newRunner = runner ^ speedIncrease;
-
-        //        // Assert
-        //        Assert.AreEqual(expectedNewSpeed, newRunner.Speed);
-        //        Assert.AreEqual(runner.Distance, newRunner.Distance);
-        //    }
-        //}
-
-        //[TestMethod]
-        //public void Construct_ShouldThrowArgumentOutOfRangeException()
-        //{
-        //    // Arrange
-        //    int negativeSize = -1;
-
-        //    // Act & Assert
-        //    var ex = Assert.ThrowsException<ArgumentOutOfRangeException>(() => new RunnerArray(negativeSize));
-        //    Assert.That(ex.Message, Is.EqualTo("–азмер массива должен быть больше нул€ (Parameter 'size')"));
-        //}
 
         [TestMethod]
         public void CollectionCount_Increases_When_NewInstanceIsCreated()

@@ -62,12 +62,59 @@
                     Console.WriteLine($"Расстояние до встречи бегунов: {meetingDistance} км.");
                 Runner r6 = r2 ^ 10;
                 Console.WriteLine($"Бегун с увеличенной скоростью: {r6}");
-                
+
                 // Часть 3
                 Console.WriteLine("\nЧасть 3: Демонстрация класса RunnerArray");
-                RunnerArray array1 = new RunnerArray(5);
-                Console.WriteLine("\nМассив из случайных чисел");
-                array1.PrintRunner();
+                Console.WriteLine("Выберите способ создания массива:");
+                Console.WriteLine("1 - Случайная генерация");
+                Console.WriteLine("2 - Ручной ввод");
+                bool isCorrect;
+                int choice;
+
+                do
+                {
+                    isCorrect = int.TryParse(Console.ReadLine(), out choice);
+                    if (!isCorrect || choice < 1 || choice > 2)
+                    {
+                        isCorrect = false;
+                        Console.WriteLine("Вы ввели некорректно. Введите число от 1 до 2");
+                    }
+
+                } while (choice < 1 || choice > 2);
+
+                RunnerArray array1 = null; // Инициализируем вне блока if
+
+                if (choice == 1)
+                {
+                    Console.WriteLine("Введите количество бегунов для случайной генерации:");
+                    int quantity;
+
+                    do
+                    {
+                        isCorrect = int.TryParse(Console.ReadLine(), out quantity);
+                        if (!isCorrect || quantity <= 0)
+                        {
+                            isCorrect = false;
+                            Console.WriteLine("Вы ввели некорректно. Введите натуральное число");
+                        }
+
+                    } while (quantity <= 0);
+
+
+                    array1 = new RunnerArray(quantity);
+                    Console.WriteLine("\nМассив из случайных чисел:");
+                    array1.PrintRunner();
+                }
+                else if (choice == 2)
+                {
+                    RunnerArray array3 = new RunnerArray(); //Создаем экземпляр класса
+                    array3.InputRunners();
+                    array1 = array3; // Присваиваем array4 к array1, чтобы его можно было передать в ProcessAndSort
+
+                    Console.WriteLine("\nВведенный вручную массив:");
+                    array1.PrintRunner();
+                }
+
 
                 RunnerArray array2 = new RunnerArray(array1);
                 Console.WriteLine("\nГлубокое копирование первого массива");
@@ -80,20 +127,35 @@
                 array2.PrintRunner();
 
                 Console.WriteLine("\nДемонстрация индексатора");
-                Console.WriteLine($"Бегун 2: {array1[2]}");
+                if (array1 != null && array1.Count > 2) // Проверка на null добавлена
+                {
+                    Console.WriteLine($"Бегун 2: {array1[2]}");
+                }
+                else
+                {
+                    Console.WriteLine("Массив слишком мал, чтобы показать бегуна 2");
+                }
 
                 try
                 {
                     array1[10] = new Runner(100, 5000);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"\nНе существует: {ex.Message}");
                 }
 
                 try
                 {
-                    Console.WriteLine($"Бегун 10: {array1[10]}");
+                    if (array1 != null && array1.Count > 5) // Проверка на null добавлена
+                    {
+                        Console.WriteLine($"Бегун 5: {array1[5]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Массив слишком мал чтобы показать бегуна 5");
+                    }
+
                 }
                 catch (Exception ex)
                 {

@@ -20,7 +20,7 @@ namespace Lab9
         /// <summary>
         /// Конструктор без параметров. Длина массива равна 1
         /// </summary>
-        public RunnerArray() : this(1) { }
+        public RunnerArray(Runner[] runners) : this(1) { }
 
         /// <summary>
         /// Конструктор с параметром, задает размер массива. Заполняем массив случайными числами
@@ -93,10 +93,10 @@ namespace Lab9
 
             for (int i = 0; i < arr.Length; i++)
             {
-                Console.WriteLine($"Бегун {i+1}: {arr[i]}");
+                Console.WriteLine($"Бегун {i + 1}: {arr[i]}");
             }
         }
-        
+
         /// <summary>
         /// Сортировка массива по расстоянию, после по скорости (по убыванию)
         /// </summary>
@@ -114,11 +114,55 @@ namespace Lab9
                 return;
             }
 
-            Array.Sort(arr, (x,y) =>
+            Array.Sort(arr, (x, y) =>
             {
                 int distanceComparison = y.Distance.CompareTo(x.Distance);
-                return distanceComparison != 0 ? distanceComparison : x.CalculatingTime().CompareTo(y.CalculatingTime());  
+                return distanceComparison != 0 ? distanceComparison : x.CalculatingTime().CompareTo(y.CalculatingTime());
             });
+        }
+
+        public static int ReadNumber()
+        {
+            int quantity;
+            bool isCorrect;
+            do
+            {
+                isCorrect = int.TryParse(Console.ReadLine(), out quantity);
+                if (!isCorrect || quantity <= 0)
+                {
+                    isCorrect = false;
+                    Console.WriteLine("Вы ввели некорректно. Введите натуральное число");
+                }
+
+            } while (quantity <= 0);
+            return quantity;
+        }
+
+        public void InputRunners()
+        {
+            Console.WriteLine("Введите количество бегунов");
+            int quantity = ReadNumber();
+
+
+            arr = new Runner[quantity];
+
+            for (int i = 0; i < quantity; i++)
+            {
+                Console.WriteLine($"Введите данные для бегуна {i + 1}");
+
+                Console.WriteLine("Расстояние: ");
+                int distance = ReadNumber();
+
+                Console.WriteLine("Скорость: ");
+                int speed = ReadNumber();
+
+                arr[i] = new Runner(distance, speed);
+            }
+            collectionCount++;
+        }
+        public int Count
+        {
+            get { return arr?.Length ?? 0; } // Возвращает длину массива, если он не null, иначе 0
         }
     }
 }
