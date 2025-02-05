@@ -107,9 +107,9 @@
                 }
                 else if (choice == 2)
                 {
-                    RunnerArray array3 = new RunnerArray(); //Создаем экземпляр класса
-                    array3.InputRunners();
-                    array1 = array3; // Присваиваем array4 к array1, чтобы его можно было передать в ProcessAndSort
+                    RunnerArray array4 = new RunnerArray(100); //Создаем экземпляр класса
+                    array4.InputRunners();
+                    array1 = array4; // Присваиваем array4 к array1, чтобы его можно было передать в ProcessAndSort
 
                     Console.WriteLine("\nВведенный вручную массив:");
                     array1.PrintRunner();

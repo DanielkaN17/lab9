@@ -58,6 +58,7 @@ namespace Lab9
             collectionCount++;
         }
 
+
         /// <summary>
         /// Индексатор для доступа к элементам массива. Обеспечивает проверку границ
         /// </summary>
@@ -121,6 +122,10 @@ namespace Lab9
             });
         }
 
+        /// <summary>
+        /// Проверка на корректность ввода числа
+        /// </summary>
+        /// <returns>Если некорректный ввод, то выдает об ошибке</returns>
         public static int ReadNumber()
         {
             int quantity;
@@ -138,6 +143,9 @@ namespace Lab9
             return quantity;
         }
 
+        /// <summary>
+        /// Заполнение массива вручную
+        /// </summary>
         public void InputRunners()
         {
             Console.WriteLine("Введите количество бегунов");

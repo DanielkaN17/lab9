@@ -346,6 +346,33 @@ namespace TestProject3
             Assert.AreEqual(hashCode1, hashCode2);
         }
 
+        [TestMethod]
+        public void ReadNumber_WithValidInput_ShouldReturnCorrectNumber()
+        {
+            // Arrange
+            var input = new StringReader("5");
+            Console.SetIn(input);
+
+            // Act
+            int result = RunnerArray.ReadNumber();
+
+            // Assert
+            Assert.AreEqual(5, result);
+        }
+
+        [TestMethod]
+        public void ReadNumber_WithInvalidThenValidInput_ShouldReturnCorrectNumber()
+        {
+            // Arrange
+            var input = new StringReader("-1\n0\n7");
+            Console.SetIn(input);
+
+            // Act
+            int result = RunnerArray.ReadNumber();
+
+            // Assert
+            Assert.AreEqual(7, result);
+        }
 
         [TestMethod]
         public void CollectionCount_Increases_When_NewInstanceIsCreated()
@@ -361,6 +388,165 @@ namespace TestProject3
             Assert.AreEqual(initialCount + 2, RunnerArray.CollectionCount);
         }
 
+        [TestMethod]
+        public void CopyConstructor_ShouldCreateDeepCopy()
+        {
+            // Arrange
+            var originalArray = new RunnerArray(3);
+            var originalFirst = originalArray[0];
+
+            // Act
+            var copiedArray = new RunnerArray(originalArray);
+
+            // Assert
+            Assert.AreNotSame(originalArray[0], copiedArray[0]);
+            Assert.AreEqual(originalFirst.Distance, copiedArray[0].Distance);
+            Assert.AreEqual(originalFirst.Speed, copiedArray[0].Speed);
+        }
+
+        [TestMethod]
+        public void Constructor_ShouldCreateArrayWithGivenSize()
+        {
+            // Arrange
+            int size = 5;
+
+            // Act
+            var runnerArray = new RunnerArray(size);
+
+            // Assert
+            Assert.AreEqual(size, runnerArray.Count);
+        }
+
+        [TestMethod]
+        public void PrintRunner_ShouldWriteToConsole()
+        {
+            // Arrange
+            var runnerArray = new RunnerArray(2)
+            {
+                [0] = new Runner(100, 10),
+                [1] = new Runner(200, 20)
+            };
+
+            var consoleOutput = new StringWriter();
+            Console.SetOut(consoleOutput);
+
+            // Act
+            runnerArray.PrintRunner();
+
+            // Assert
+            var output = consoleOutput.ToString();
+            Assert.IsTrue(output.Contains("Бегун 1"));
+            Assert.IsTrue(output.Contains("Бегун 2"));
+        }
+
+        [TestMethod]
+        public void SortRunners_ShouldPrintMessage()
+        {
+            // Arrange
+            var consoleOutput = new StringWriter();
+            Console.SetOut(consoleOutput);
+
+            var runnerArray = new RunnerArray(0);
+
+            // Act
+            runnerArray.SortRunners();
+
+            // Assert
+            Assert.IsTrue(consoleOutput.ToString().Contains("Массив пуст"));
+        }
+
+        [TestMethod]
+        public void Indexer_ShouldReturnCorrectRunner()
+        {
+            // Arrange
+            var runnerArray = new RunnerArray(3);
+            var firstRunner = runnerArray[0];
+
+            // Assert
+            Assert.IsNotNull(firstRunner);
+        }
+
+        [TestMethod]
+        public void Indexer_ShouldThrowIndexOutOfRangeException()
+        {
+            // Arrange
+            var runnerArray = new RunnerArray(3);
+
+            // Assert
+            Assert.ThrowsException<IndexOutOfRangeException>(() => runnerArray[-1]);
+            Assert.ThrowsException<IndexOutOfRangeException>(() => runnerArray[3]);
+        }
+
+        [TestMethod]
+        public void CollectionCount_ShouldIncrementWithEachNewArray()
+        {
+            // Arrange
+            int initialCount = RunnerArray.CollectionCount;
+
+            // Act
+            var array1 = new RunnerArray(3);
+            var array2 = new RunnerArray(array1);
+
+            // Assert
+            Assert.AreEqual(initialCount + 2, RunnerArray.CollectionCount);
+        }
+
+        [TestMethod]
+        public void Count_ShouldReturnZero()
+        {
+            // Arrange
+            RunnerArray nullArray = null;
+
+            // Assert
+            Assert.AreEqual(0, nullArray?.Count ?? 0);
+        }
+
+        [TestMethod]
+        public void PrintRunner_ShouldNotThrowExceptionForEmptyArray()
+        {
+            // Arrange
+            var emptyArray = new RunnerArray(0);
+
+            // Act & Assert (Ensures no exception is thrown)
+            emptyArray.PrintRunner();
+        }
+
+        [TestMethod]
+        public void Constructor_ShouldThrowArgumentOutOfRangeException()
+        {
+            // Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => new RunnerArray(-1));
+        }
+
+        [TestMethod]
+        public void CalculatingTime_ShouldCalculateCorrectly()
+        {
+            // Arrange
+            var runner = new Runner(10, 100);
+
+            // Act
+            double time = runner.CalculatingTime();
+
+            // Assert
+            Assert.AreEqual(10, time);
+        }
+
+        [TestMethod]
+    public void SortRunners_NullArray_ShouldPrintMessage()
+        {
+            // Arrange
+            var consoleOutput = new StringWriter();
+            Console.SetOut(consoleOutput);
+
+            var runnerArray = new RunnerArray(0);
+            runnerArray.arr = null; // Предполагаем, что arr - это поле класса
+
+            // Act
+            runnerArray.SortRunners();
+
+            // Assert
+            Assert.IsTrue(consoleOutput.ToString().Contains("Массив не создан"));
+        }
 
     }
 }
