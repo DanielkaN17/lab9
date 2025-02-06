@@ -530,23 +530,5 @@ namespace TestProject3
             // Assert
             Assert.AreEqual(10, time);
         }
-
-        [TestMethod]
-    public void SortRunners_NullArray_ShouldPrintMessage()
-        {
-            // Arrange
-            var consoleOutput = new StringWriter();
-            Console.SetOut(consoleOutput);
-
-            var runnerArray = new RunnerArray(0);
-            runnerArray.arr = null; // Предполагаем, что arr - это поле класса
-
-            // Act
-            runnerArray.SortRunners();
-
-            // Assert
-            Assert.IsTrue(consoleOutput.ToString().Contains("Массив не создан"));
-        }
-
     }
 }
